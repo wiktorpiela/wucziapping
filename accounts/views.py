@@ -10,7 +10,28 @@ from verify_email.email_handler import send_verification_email
 from .forms import RegisterForm
 
 def login_user(request):
-    return render(request, "login_user.html")
+    if request.method == "GET":
+        return render(request, "login_user.html")
+    else:
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        username_exist = User.objects.filter(username=username).exists()
+        if username_exist == False:
+            message = f"Użytkownik {username} nie istnieje. Spróbuj ponownie."
+            return render(request, "login_user.html", {"noUser":message})
+        else:
+            user_is_active = User.objects.filter(username=username, is_active = True).exists()
+            if user_is_active == False:
+                message = f"Konto użytkownika {username} jest nieaktywne. Aktywuj konto, a następnie spróbuj ponownie."
+                return render(request, "login_user.html", {"inactiveUser":message})
+            else:
+                user = authenticate(username=username, password=password)
+                if user is not None:
+                    login(request, user)
+                    return redirect("accounts:login_user")
+                else:
+                    message = "Niepoprawne hasło. Sprobuj ponownie lub zresetuj hasło."
+                    return render(request, "login_user.html", {"wrongPass":message})
 
 def register(request):
     if request.method == "GET":
@@ -45,3 +66,8 @@ def register(request):
         else:
             message = "Hasła nie są identyczne. Spróbuj ponownie."
             return render(request, "register.html", {"dontMatch":message})
+
+@login_required
+def logout_user(request):
+    logout(request)
+    return redirect("accounts:login_user")
