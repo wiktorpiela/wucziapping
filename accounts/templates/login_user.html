@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Logowanie
+{% endblock title %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+{% else %}
+<h1>Zaloguj się</h1>
+
+<form action="{% url 'accounts:login_user' %}" method="post">
+
+    {% csrf_token %}
+    <label for="id_username">Nazwa użytkownika</label>
+    <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+
+    <label for="id_password">Hasło</label>
+    <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+
+    <button type="submit">Zaloguj się</button>
+
+</form>
+
+<a href="{% url 'accounts:register' %}">Nie masz konta? Zarejestruj się</a>
+    
+{% endif %}
+    
+
+
+
+    
+{% endblock content %}
+    
+    

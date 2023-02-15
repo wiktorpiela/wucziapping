@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Home page
+{% endblock title %}
+    
+
+{% block content %}
+    <h1>wucziAPPing</h1>
+
+    <a href="{% url 'quiz:quiz_questions' %}">Pytania zamknięte</a><br>
+    <a href="#">Pytania otwarte</a><br>
+    <a href="#">ICS</a><br>
+    <a href="#">Prekambr</a><br>
+    <a href="{% url 'accounts:login_user' %}">Test</a><br>
+    <a href="#">Kafelki</a>
+
+
+{% endblock content %}
+    

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Pytania zamknięte
+{% endblock title %}
+    
+
+{% block content %}
+    <h1>wucziAPPing</h1>
+    <h3>wylosuj liczbe</h3>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <select name="type" id="type" required>
+            <!-- <option value="" selected disabled>Wybierz typ pytania</option> -->
+            <option value="oddz_sys" selected>Wskaż oddział systemu</option>
+            <option value="pietr_oddz">Wskaż piętro oddziału</option>
+            <option value="pietr_sys">Wskaż piętro systemu</option>
+            <option value="sys_era">Wskaż system eratemu</option>
+        </select>
+    
+        <button type="submit">Pokaz</button>
+    </form>
+
+    {{idx}}
+
+    <h5>{{num}}</h5>
+    <h5>{{question.id}}</h5>
+    <h5>{{question.type}}</h5>
+    <h5>{{question.question}}</h5>
+    <h5>{{question.ans1}}</h5>
+    <h5>{{question.ans2}}</h5>
+    <h5>{{question.ans3}}</h5>
+    <h5>{{question.ans4}}</h5>
+    <h5>{{question.ans5}}</h5>
+    <h5>{{question.correct_ans}}</h5>
+
+    <h5>{{n_rows}}</h5>
+    <h5>{{list}}</h5>
+    <h5>{{question.correct_ans}}</h5>
+{% endblock content %}
+    

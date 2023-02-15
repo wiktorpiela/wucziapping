@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Rejestracja
+{% endblock title %}
+    
+
+{% block content %}
+<h1>Zarejestruj się</h1>
+
+{% if dontMatch %}
+    <h3>{{dontMatch}}</h3>
+
+{% elif passError%}
+    <h3>Poniższe wymagania dotyczące hasła nie zostały spełnione:</h3>
+    <ul>   
+        {% for exception in passError %}
+            <li>{{exception}}</li>
+        {% endfor %}      
+    </ul>
+
+{% elif emailError %}
+    <h3>{{emailError}}</h3>
+
+{% elif usernameTaken %}
+    <h3>{{usernameTaken}}</h3>
+
+{% elif emailTaken %}
+    <h3>{{emailTaken}}</h3>
+
+{% endif %}
+    
+<form action="{% url 'accounts:register' %}" method="post">
+
+    {% csrf_token %}
+    <label for="id_username">Nazwa użytkownika</label>
+    <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" id="id_username">
+
+    <label for="id_email">Nazwa użytkownika</label>
+    <input type="email" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email">
+
+    <label for="id_password1">Hasło</label>
+    <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1">
+
+    <label for="id_password2">Potwierdzenie hasła</label>
+    <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2">
+
+    <button type="submit"> Zarejestruj się</button>
+
+</form>
+
+<a href="{% url 'accounts:login_user' %}">Logowanie</a>
+
+{% endblock content %}
+    
