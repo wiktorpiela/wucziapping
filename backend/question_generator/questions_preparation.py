@@ -23,9 +23,12 @@ class PrepareClosedEndedQuestions:
         questions = []
 
         if isHard:
-            scope = np.concatenate((data["PIETRO"].unique(), data["ODDZIAL"].unique(), data["SYSTEM"].unique(), data["ERA"].unique(), 
-                                    dataPrekambr["Jednostka nieformalna"].unique(), dataPrekambr["Eon"].unique(), 
-                                    dataPrekambr["Era"].unique(), dataPrekambr["System"].unique()))
+            scope = np.unique(
+                        np.concatenate((data["PIETRO"].unique(), data["ODDZIAL"].unique(), data["SYSTEM"].unique(), data["ERA"].unique(), 
+                                dataPrekambr["Jednostka nieformalna"].unique(), dataPrekambr["Eon"].unique(), 
+                                dataPrekambr["Era"].unique(), dataPrekambr["System"].unique()))
+                                )
+
         else:
             if isPrekambr:
                 scope = dataPrekambr[colName2].unique()

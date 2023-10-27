@@ -39,8 +39,8 @@ questeasy6 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon
 
 test7 = PrepareClosedEndedQuestions(1, 3, 3)
 questhard7 = test7.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "System", "Prekambr - wybierz system eonu", True)
-test7 = PrepareClosedEndedQuestions(1, 3, 2)
-questeasy7 = test7.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "System", "Prekambr - wybierz system eonu", False)
+# test7 = PrepareClosedEndedQuestions(1, 3, 2)
+# questeasy7 = test7.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "System", "Prekambr - wybierz system eonu", False)
 
 all_questions = [
     questhard1,
@@ -56,7 +56,6 @@ all_questions = [
     questhard6,
     questeasy6,
     questhard7,
-    questeasy7,
 ]
 
 df = pd.concat(
@@ -64,4 +63,4 @@ df = pd.concat(
     axis=0
 )
 
-df.to_csv(f"{os.getcwd()}\outputs\closed_ended_questions.csv", index=False)
+df.to_excel(f"{os.getcwd()}\outputs\closed_ended_questions.xlsx", index=False)
