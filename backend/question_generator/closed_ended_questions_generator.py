@@ -27,20 +27,20 @@ questhard4 = test4.prepare_questions(False, no_precambr_data, precambr_data, "ER
 test4 = PrepareClosedEndedQuestions(0, 1, 3)
 questeasy4 = test4.prepare_questions(False, no_precambr_data, precambr_data, "ERA", "SYSTEM", "Wybierz system ery", False)
 
-test5 = PrepareClosedEndedQuestions(2, 3, 3)
-questhard5 = test5.prepare_questions(True, no_precambr_data, precambr_data, "Era", "System", "Prekambr - wybierz system ery", True)
-test5 = PrepareClosedEndedQuestions(2, 3, 2)
-questeasy5 = test5.prepare_questions(True, no_precambr_data, precambr_data, "Era", "System", "Prekambr - wybierz system ery", False)
+# test5 = PrepareClosedEndedQuestions(2, 3, 3)
+# questhard5 = test5.prepare_questions(True, no_precambr_data, precambr_data, "Era", "System", "Prekambr - wybierz system ery", True)
+# test5 = PrepareClosedEndedQuestions(2, 3, 2)
+# questeasy5 = test5.prepare_questions(True, no_precambr_data, precambr_data, "Era", "System", "Prekambr - wybierz system ery", False)
 
-test6 = PrepareClosedEndedQuestions(1, 2, 3)
-questhard6 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "Era", "Prekambr - wybierz erę eonu", True)
-test6 = PrepareClosedEndedQuestions(1, 2, 2)
-questeasy6 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "Era", "Prekambr - wybierz erę eonu", False)
+# test6 = PrepareClosedEndedQuestions(1, 2, 3)
+# questhard6 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "Era", "Prekambr - wybierz erę eonu", True)
+# test6 = PrepareClosedEndedQuestions(1, 2, 2)
+# questeasy6 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "Era", "Prekambr - wybierz erę eonu", False)
 
-test7 = PrepareClosedEndedQuestions(1, 3, 3)
-questhard7 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "System", "Prekambr - wybierz system eonu", True)
-test7 = PrepareClosedEndedQuestions(1, 3, 2)
-questeasy7 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "System", "Prekambr - wybierz system eonu", False)
+# test7 = PrepareClosedEndedQuestions(1, 3, 3)
+# questhard7 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "System", "Prekambr - wybierz system eonu", True)
+# test7 = PrepareClosedEndedQuestions(1, 3, 2)
+# questeasy7 = test6.prepare_questions(True, no_precambr_data, precambr_data, "Eon", "System", "Prekambr - wybierz system eonu", False)
 
 all_questions = [
     questhard1,
@@ -51,12 +51,12 @@ all_questions = [
     questeasy3,
     questhard4,
     questeasy4,
-    questhard5,
-    questeasy5,
-    questhard6,
-    questeasy6,
-    questhard7,
-    questeasy7,
+    # questhard5,
+    # questeasy5,
+    # questhard6,
+    # questeasy6,
+    # questhard7,
+    # questeasy7,
 ]
 
 df = pd.concat(
@@ -64,4 +64,4 @@ df = pd.concat(
     axis=0
 )
 
-print(df)
+df.to_csv(f"{os.getcwd()}\outputs\closed_ended_questions.csv", index=False)
