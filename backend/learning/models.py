@@ -9,9 +9,9 @@ class ClosedEndedQuestionPossibleAnswers(models.Model):
 
     def __str__(self) -> str:
         if self.E != "":
-            return f"{self.A} - {self.B} - {self.C} - {self.D} - {self.E}"
+            return f"A.{self.A} - B.{self.B} - C.{self.C} - D.{self.D} - E.{self.E}"
         else:
-            return f"{self.A} - {self.B} - {self.C} - {self.D}"
+            return f"A.{self.A} - B.{self.B} - C.{self.C} - D.{self.D}"
 
 class ClosedEndedQuestionCorrectAnswer(models.Model):
     correct_answer = models.CharField(max_length=25)
@@ -26,7 +26,7 @@ class ClosedEndedQuestionText(models.Model):
         return self.question_text
 
 class ClosedEndedQuestion(models.Model):
-    question_text_id = models.ForeignKey(ClosedEndedQuestionText, on_delete=models.CASCADE, related_name="question_txt")
-    possible_answers_id = models.ForeignKey(ClosedEndedQuestionPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
-    correct_answer_id = models.ForeignKey(ClosedEndedQuestionCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
+    question_text = models.ForeignKey(ClosedEndedQuestionText, on_delete=models.CASCADE, related_name="question_txt")
+    possible_answers = models.ForeignKey(ClosedEndedQuestionPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
+    correct_answer = models.ForeignKey(ClosedEndedQuestionCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
     is_hard = models.BooleanField(default=False)
