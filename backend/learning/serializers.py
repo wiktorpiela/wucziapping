@@ -8,4 +8,4 @@ class ClosedEndedQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ClosedEndedQuestion
-        fields = ("question_text", "possible_answers", "correct_answer", "is_hard",)
+        fields = ("id","question_text", "possible_answers", "correct_answer", "is_hard",)
