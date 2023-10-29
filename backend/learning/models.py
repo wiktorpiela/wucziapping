@@ -29,4 +29,4 @@ class ClosedEndedQuestion(models.Model):
     question_text = models.ForeignKey(ClosedEndedQuestionText, on_delete=models.CASCADE, related_name="question_txt")
     possible_answers = models.ForeignKey(ClosedEndedQuestionPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
     correct_answer = models.ForeignKey(ClosedEndedQuestionCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
-    is_hard = models.BooleanField(default=False)
+    is_hard = models.IntegerField()

@@ -4,5 +4,5 @@ from . import views
 app_name = "learning"
 
 urlpatterns = [
-    path("test-view/", views.Test.as_view(), name="test"),
+    path("get-closed-ended-questions/", views.LearningGetClosedEndedQuestions.as_view(), name="test"),
 ]
