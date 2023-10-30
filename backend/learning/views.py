@@ -24,10 +24,10 @@ class QuestionTypesDifficultyLevel(APIView):
             isEasy = ClosedEndedQuestion.objects.filter(Q(question_text__question_text__icontains=qtype) & Q(is_hard=0)).exists()
             isEasyList.append(isEasy)
 
-        question_types = {"questionTypes":list(questTypes)}
-        is_easy = {"isEasy":isEasyList}
-            
-        return Response({"types":[question_types, is_easy]}, status=status.HTTP_200_OK)
+        question_types = {"questionTypes":list(questTypes),
+                          "isEasy":isEasyList}
+        
+        return Response({"types":question_types}, status=status.HTTP_200_OK)
 
 
         
