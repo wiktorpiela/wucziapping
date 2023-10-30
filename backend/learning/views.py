@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from .models import ClosedEndedQuestion, ClosedEndedQuestionText
+from .models import ClosedEndedQuestion, ClosedEndedQuestionCategory
 from .serializers import ClosedEndedQuestionSerializer
 from django.db.models import Q
   
@@ -11,20 +11,20 @@ class LearningGetClosedEndedQuestions(generics.ListAPIView):
 
     def get_queryset(self):
         isHard = self.request.data.get("isHard")
-        questionType = self.request.data.get("questionType")
-        queryset = ClosedEndedQuestion.objects.filter(Q(is_hard=isHard) & Q(question_text__question_text__icontains=questionType)).order_by("?")
+        qCategory = self.request.data.get("questionCategory")
+        queryset = ClosedEndedQuestion.objects.filter(Q(is_hard=isHard) & Q(question_category__question_category__icontains=qCategory)).order_by("?")
         return queryset
     
 class QuestionTypesDifficultyLevel(APIView):
 
     def get(self, request):
-        questTypes = ClosedEndedQuestionText.objects.all().values_list("question_text", flat=True)
+        categories = ClosedEndedQuestionCategory.objects.all().values_list("question_category", flat=True)
         isEasyList = []
-        for qtype in questTypes:
-            isEasy = ClosedEndedQuestion.objects.filter(Q(question_text__question_text__icontains=qtype) & Q(is_hard=0)).exists()
+        for qcat in categories:
+            isEasy = ClosedEndedQuestion.objects.filter(Q(question_category__question_category__icontains=qcat) & Q(is_hard=0)).exists()
             isEasyList.append(isEasy)
 
-        question_types = {"questionTypes":list(questTypes),
+        question_types = {"questionTypes":list(categories),
                           "isEasy":isEasyList}
         
         return Response({"types":question_types}, status=status.HTTP_200_OK)
