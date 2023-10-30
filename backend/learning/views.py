@@ -5,7 +5,6 @@ from rest_framework import generics
 from .models import ClosedEndedQuestion, ClosedEndedQuestionText
 from .serializers import ClosedEndedQuestionSerializer
 from django.db.models import Q
-import json
   
 class LearningGetClosedEndedQuestions(generics.ListAPIView):
     serializer_class = ClosedEndedQuestionSerializer
@@ -25,9 +24,10 @@ class QuestionTypesDifficultyLevel(APIView):
             isEasy = ClosedEndedQuestion.objects.filter(Q(question_text__question_text__icontains=qtype) & Q(is_hard=0)).exists()
             isEasyList.append(isEasy)
 
-        serialized = json.dumps(zip(questTypes, isEasyList))
+        question_types = {"questionTypes":list(questTypes)}
+        is_easy = {"isEasy":isEasyList}
             
-        return Response({"types":serialized}, status=status.HTTP_200_OK)
+        return Response({"types":[question_types, is_easy]}, status=status.HTTP_200_OK)
 
 
         
