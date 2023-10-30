@@ -15,7 +15,7 @@ class LearningGetClosedEndedQuestions(generics.ListAPIView):
         queryset = ClosedEndedQuestion.objects.filter(Q(is_hard=isHard) & Q(question_category__question_category__icontains=qCategory)).order_by("?")
         return queryset
     
-class QuestionTypesDifficultyLevel(APIView):
+class QuestionCategoryDifficultyLevel(APIView):
 
     def get(self, request):
         categories = ClosedEndedQuestionCategory.objects.all().values_list("question_category", flat=True)
