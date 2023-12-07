@@ -15,11 +15,25 @@ class ClosedEndedQuestionBuilder:
             temp=self.inputDataNonPrecambrian[[colNameTarget, colNameScope]].drop_duplicates()
 
         n = len(temp)
-        target_list = temp[colNameScope].unique()
+        target_list = temp[colNameTarget].unique()
         target_list = [ele for ele in target_list for i in range(n*multiplyIndex)]
 
         if isHard:
-            #scope_list = temp[colNameScope].unique()
+            data = self.inputDataNonPrecambrian
+            data2 = self.inputDataPrecambrian
+            scope_list = np.unique(
+                np.concatenate(
+                    (data["PIETRO"].unique(), 
+                     data["ODDZIAL"].unique(), 
+                     data["SYSTEM"].unique(), 
+                     data["ERA"].unique(), 
+                     data2["Jednostka nieformalna"].unique(),
+                     data2["Eon"].unique(), 
+                     data2["Era"].unique(), 
+                     data2["System"].unique()
+                     )
+                    )
+                )
             sampleSize = 4
         else:
             scope_list = temp[colNameScope].unique()
@@ -36,17 +50,21 @@ class ClosedEndedQuestionBuilder:
 
             # print(f"CORRECT {correct_array}")
             # print(f"WRONG {wrong_array}")
-            # if len(wrong_array)<4:
-            #     print('WARNING!!!!!-------------------')
-            #     possible_answers.append(np.repeat(np.nan, 5))
-            #     correct_answers.append(np.nan)
-            #     continue
+            if len(wrong_array)<sampleSize+1:
+                print('WARNING!!!!!-------------------')
+                # possible_answers.append(np.repeat(np.nan, 5))
+                # correct_answers.append(np.nan)
+                # continue
+                raise ValueError
 
             temp_possible_answers = np.concatenate(
                 (np.random.choice(wrong_array, sampleSize, replace=False), np.random.choice(correct_array, 1))
             )
             np.random.shuffle(temp_possible_answers)
-            temp_possible_answers = np.append(temp_possible_answers, np.nan)
+
+            if not isHard:
+                temp_possible_answers = np.append(temp_possible_answers, np.nan)
+                
             for correct in temp_possible_answers:
                 if correct in correct_array:
                     correct_answers.append(correct)
@@ -65,6 +83,8 @@ class ClosedEndedQuestionBuilder:
         )
 
         df_final = pd.concat([df1, df2], axis=1).drop_duplicates()
+
+        return df_final
 
     def prepare_multi(self, isPrecambrian:bool, isHard:bool, multiplyIndex:int, colNameTarget:str, colNameScope:str):
         pass
