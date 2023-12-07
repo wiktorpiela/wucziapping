@@ -1,14 +1,14 @@
 import pandas as pd
 import numpy as np
 
-class PrepareClosedEndedQuestions:
+class ClosedEndedQuestions:
 
     def __init__(self, startColIdx:int, endColIdx:int, multiplyRowsIdx:int):
         self.startColIdx = startColIdx
         self.endColIdx = endColIdx
         self.multiplyRowsIdx = multiplyRowsIdx
 
-    def prepare_questions(self, isPrekambr:bool, inputData:pd.DataFrame, inputDataPrekambr:pd.DataFrame, colName1:str, colName2:str, questionPattern:str, isHard:bool):
+    def prepare_single(self, isPrekambr:bool, inputData:pd.DataFrame, inputDataPrekambr:pd.DataFrame, colName1:str, colName2:str, questionPattern:str, isHard:bool):
         data = inputData
         dataPrekambr = inputDataPrekambr
 
