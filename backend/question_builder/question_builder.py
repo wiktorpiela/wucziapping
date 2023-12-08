@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-class ClosedEndedQuestionBuilder:
+class QuestionBuilder:
 
     def __init__(self, inputDataNonPrecambrian:pd.DataFrame, inputDataPrecambrian:pd.DataFrame):
         self.inputDataNonPrecambrian = inputDataNonPrecambrian
@@ -135,6 +135,8 @@ class ClosedEndedQuestionBuilder:
 
             if len(correct_array)>5:
                 randomSampleCorrectSize = np.random.randint(1, 6)
+            elif len(correct_array)==1:
+                randomSampleCorrectSize=1
             else:
                 randomSampleCorrectSize = np.random.randint(1,len(correct_array))
 
