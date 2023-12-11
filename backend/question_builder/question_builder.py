@@ -7,32 +7,30 @@ class QuestionBuilder:
         self.inputDataNonPrecambrian = inputDataNonPrecambrian
         self.inputDataPrecambrian = inputDataPrecambrian
 
-        def prepare_closed_ended(self, isPrecambrian:bool, isMulti:bool, multiplyIndex:int, colNameTarget:str, colNameScope:str, questionTxt:str):
+        def prepare_closed_ended(self, isPrecambrian:bool, isMulti:bool, 
+                                 bothScopes:bool, multiplyIndex:int, 
+                                 colNameTarget:str, colNameScope:str, questionTxt:str):
 
             if isPrecambrian:
-                temp=self.inputDataPrecambrian[[colNameTarget, colNameScope]].drop_duplicates()
+                data=self.inputDataPrecambrian[[colNameTarget, colNameScope]].drop_duplicates()
             else:
-                temp=self.inputDataNonPrecambrian[[colNameTarget, colNameScope]].drop_duplicates()
+                data=self.inputDataNonPrecambrian[[colNameTarget, colNameScope]].drop_duplicates()
 
-            n = len(temp)
-            target_list = temp[colNameTarget].unique()
+            n = len(data)
+            target_list = data[colNameTarget].unique()
             target_list = [ele for ele in target_list for i in range(n*multiplyIndex)]
 
-            data = self.inputDataNonPrecambrian
-            data2 = self.inputDataPrecambrian
-            scope_list = np.unique(
-                np.concatenate(
-                    (data["PIETRO"].unique(), 
-                        data["ODDZIAL"].unique(), 
-                        data["SYSTEM"].unique(), 
-                        data["ERA"].unique(), 
-                        data2["Jednostka nieformalna"].unique(),
-                        data2["Eon"].unique(), 
-                        data2["Era"].unique(), 
-                        data2["System"].unique()
+            if bothScopes:
+                precambrianData = self.inputDataPrecambrian
+                nonPrecambrianData = self.inputDataNonPrecambrian
+                
+                scope_list = np.unique(
+                    np.concatenate(
+                        (precambrianData[colNameScope].unique(), nonPrecambrianData[colNameScope].unique())
                         )
                     )
-                )
+            else:
+                scope_list = data[colNameScope].unique()
         
             question_text = []
             correct_answers = []
@@ -40,29 +38,42 @@ class QuestionBuilder:
 
             for target in target_list:
                 question_text.append(f"{questionTxt} {target}")
-                correct_array = temp[temp[colNameTarget]==target][colNameScope].unique()
+                correct_array = data[data[colNameTarget]==target][colNameScope].unique()
                 wrong_array = [element for element in scope_list if element not in correct_array]
 
                 # print(f"CORRECT {correct_array}")
                 # print(f"WRONG {wrong_array}")
-            
 
-                if len(correct_array)>5:
-                    randomSampleCorrectSize = np.random.randint(1, 6)
-                elif len(correct_array)==1:
-                    randomSampleCorrectSize=1
-                else:
-                    randomSampleCorrectSize = np.random.randint(1,len(correct_array))
 
-                wrongSample = 5-randomSampleCorrectSize
+                    # if len(correct_array)>9:
+                    #     randomSampleCorrectSize = np.random.randint(1, 10)
+                    # elif len(correct_array)==1:
+                    #     randomSampleCorrectSize=1
+                    # else:
+                    #     randomSampleCorrectSize = np.random.randint(1, len(correct_array))
 
-                temp_wrong_answers = np.random.choice(wrong_array, wrongSample, replace=False)
-                temp_correct_answers = np.random.choice(correct_array, randomSampleCorrectSize, replace=False)
-                temp_possible_answers = np.concatenate((temp_correct_answers, temp_wrong_answers))
-                np.random.shuffle(temp_possible_answers)
-                possible_answers.append(temp_possible_answers)
+                    # wrongSample = 9-randomSampleCorrectSize
 
-                correct_answers.append(temp_correct_answers)
+                    # temp_wrong_answers = np.random.choice(wrong_array, wrongSample, replace=False)
+                    # temp_correct_answers = np.random.choice(correct_array, randomSampleCorrectSize, replace=False)
+                    # temp_possible_answers = np.concatenate((temp_correct_answers, temp_wrong_answers))
+                    # np.random.shuffle(temp_possible_answers)
+                    # possible_answers.append(temp_possible_answers)
+
+                    # correct_answers.append(temp_correct_answers)
+
+                pos, corr = make_answers(correct_array, wrong_array, 9, isMulti)
+                possible_answers.append(pos)
+                correct_answers.append(corr)
+
+
+                    # temp_wrong_answers = np.random.choice(wrong_array, 8, replace=False)
+                    # temp_correct_answers = np.random.choice(correct_array, 1, replace=False)
+                    # temp_possible_answers = np.concatenate((temp_correct_answers, temp_wrong_answers))
+                    # np.random.shuffle(temp_possible_answers)
+                    # possible_answers.append(temp_possible_answers)
+                    # correct_answers.append(temp_correct_answers)
+
 
             df1=pd.DataFrame({
                 'question':question_text,
@@ -76,7 +87,35 @@ class QuestionBuilder:
 
             df_final = pd.concat([df1, df2], axis=1)
 
-        return df_final
+            return df_final
+        
+        @staticmethod
+        def make_answers(correct_array:list, wrong_array:list, maxIndex:int, isMulti:bool):
+
+            if isMulti:
+                if len(correct_array)>9:
+                    randomSampleCorrectSize = np.random.randint(1, maxIndex+1)
+                elif len(correct_array)==1:
+                    randomSampleCorrectSize=1
+                else:
+                    randomSampleCorrectSize = np.random.randint(1, len(correct_array))
+            else:
+                randomSampleCorrectSize=1
+
+            wrongSample = maxIndex-randomSampleCorrectSize
+            temp_wrong_answers = np.random.choice(wrong_array, wrongSample, replace=False)
+            temp_correct_answers = np.random.choice(correct_array, randomSampleCorrectSize, replace=False)
+            temp_possible_answers = np.concatenate((temp_correct_answers, temp_wrong_answers))
+
+            #shuffling
+            iter = np.random.randint(1, 10)
+            for i in range(iter):
+                np.random.shuffle(temp_possible_answers)
+
+            return temp_possible_answers, temp_correct_answers
+
+        
+        
 
     # def prepare_single(self, isPrecambrian:bool, isHard:bool, multiplyIndex:int, colNameTarget:str, colNameScope:str, questionTxt:str):
 
