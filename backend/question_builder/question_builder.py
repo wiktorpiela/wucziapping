@@ -4,7 +4,7 @@ import string
 
 class QuestionBuilder:
 
-    colNames = [e for e in string.printable if e in string.ascii_uppercase]
+    colNames = list(string.ascii_uppercase)
 
     def __init__(self, inputDataNonPrecambrian:pd.DataFrame, inputDataPrecambrian:pd.DataFrame):
         self.inputDataNonPrecambrian = inputDataNonPrecambrian
@@ -12,8 +12,8 @@ class QuestionBuilder:
 
     def prepare_closed_ended(self, isPrecambrian:bool, isMulti:bool, 
                              bothScopes:bool, multiplyIndex:int, 
-                             colNameTarget:str, colNameScope:str, 
-                             questionTxt:str, targetExclusionList:list=[]):
+                             nPossibleAnswers:int, colNameTarget:str, 
+                             colNameScope:str, questionTxt:str, targetExclusionList:list=[]):
 
         if isPrecambrian:
             data=self.inputDataPrecambrian[[colNameTarget, colNameScope]].drop_duplicates()
@@ -44,7 +44,7 @@ class QuestionBuilder:
             correct_array = data[data[colNameTarget]==target][colNameScope].unique()
             wrong_array = [element for element in scope_list if element not in correct_array]
 
-            pos, corr = self.make_answers(correct_array, wrong_array, 6, isMulti)
+            pos, corr = self.make_answers(correct_array, wrong_array, nPossibleAnswers, isMulti)
             possible_answers.append(pos)
             correct_answers.append(corr)
 
@@ -53,13 +53,8 @@ class QuestionBuilder:
             'correct_answer':correct_answers
         })
 
-        df2=pd.DataFrame(
-            possible_answers,
-        )
-
-        for i in range(len(df2.columns)):
-            df2.columns.values[i] = self.colNames[i]
-
+        df2=pd.DataFrame(possible_answers)
+        df2.columns = self.colNames[:len(df2.columns)]
         
         df_final = pd.concat([df1, df2], axis=1)
 
