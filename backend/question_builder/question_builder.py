@@ -34,7 +34,9 @@ class QuestionBuilder:
                 )
         else:        
             scope_list = data[colNameScope].unique()
-    
+            
+        scope_list = np.delete(scope_list, np.where(scope_list=="brak"))
+        
         question_text = []
         correct_answers = []
         possible_answers = []
