@@ -13,7 +13,9 @@ class QuestionBuilder:
     def prepare_closed_ended(self, isPrecambrian:bool, isMulti:bool, 
                              bothScopes:bool, multiplyIndex:int, 
                              nPossibleAnswers:int, colNameTarget:str, 
-                             colNameScope:str, questionTxt:str, targetExclusionList:list=[]):
+                             colNameScope:str, questionTxt:str,
+                             excludeEmptyFromScope:bool=True, 
+                             targetExclusionList:list=[]):
 
         if isPrecambrian:
             data=self.inputDataPrecambrian[[colNameTarget, colNameScope]].drop_duplicates()
@@ -35,7 +37,8 @@ class QuestionBuilder:
         else:        
             scope_list = data[colNameScope].unique()
             
-        scope_list = np.delete(scope_list, np.where(scope_list=="brak"))
+        if excludeEmptyFromScope:
+            scope_list = np.delete(scope_list, np.where(scope_list=="brak"))
         
         question_text = []
         correct_answers = []
