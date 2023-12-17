@@ -17,17 +17,23 @@ class ClosedEndedQuestionPossibleAnswers(models.Model):
         else:
             return f"{self.A} - {self.B} - {self.C} - {self.D} - {self.E} - {self.F}"
 
+class ClosedEndedQuestionText(models.Model):
+    question_text = models.CharField(max_length=200)
+
+    def __str__(self) -> str:
+        return self.question_text
+
+
+
+
+
 # class ClosedEndedQuestionCorrectAnswer(models.Model):
 #     correct_answer = models.CharField(max_length=25)
 
 #     def __str__(self) -> str:
 #         return self.correct_answer
 
-# class ClosedEndedQuestionText(models.Model):
-#     question_text = models.CharField(max_length=200)
 
-#     def __str__(self) -> str:
-#         return self.question_text
     
 # class ClosedEndedQuestionCategory(models.Model):
 #     question_category = models.CharField(max_length=200)
