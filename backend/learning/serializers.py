@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer
+from .models import ClosedEndedQuestion
 
 class ClosedEndedQuestionSerializer(serializers.ModelSerializer):
     category_key = serializers.StringRelatedField()

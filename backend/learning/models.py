@@ -27,7 +27,7 @@ class ClosedEndedQuestionCategory(models.Model):
     question_category = models.CharField(max_length=200)
 
     def __str__(self) -> str:
-        return self.question_category.split(',')
+        return self.question_category
 
 class ClosedEndedQuestionCorrectAnswer(models.Model):
     correct_answer = models.CharField(max_length=200)
