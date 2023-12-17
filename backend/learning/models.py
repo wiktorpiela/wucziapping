@@ -22,27 +22,33 @@ class ClosedEndedQuestionText(models.Model):
 
     def __str__(self) -> str:
         return self.question_text
-
-
-
-
-
-# class ClosedEndedQuestionCorrectAnswer(models.Model):
-#     correct_answer = models.CharField(max_length=25)
-
-#     def __str__(self) -> str:
-#         return self.correct_answer
-
-
     
-# class ClosedEndedQuestionCategory(models.Model):
-#     question_category = models.CharField(max_length=200)
+class ClosedEndedQuestionCategory(models.Model):
+    question_category = models.CharField(max_length=200)
 
-# class ClosedEndedQuestion(models.Model):
-#     question_category = models.ForeignKey(ClosedEndedQuestionCategory, on_delete=models.CASCADE, related_name="question_cat")
-#     question_text = models.ForeignKey(ClosedEndedQuestionText, on_delete=models.CASCADE, related_name="question_txt")
-#     possible_answers = models.ForeignKey(ClosedEndedQuestionPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
-#     correct_answer = models.ForeignKey(ClosedEndedQuestionCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
-#     is_hard = models.SmallIntegerField()
+    def __str__(self) -> str:
+        return self.question_category
+
+class ClosedEndedQuestionCorrectAnswer(models.Model):
+    correct_answer = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.correct_answer
+    
+class ClosedEndedQuestionIsMulti(models.Model):
+    isMulti = models.SmallIntegerField()
+
+    def __str__(self) -> str:
+        if self.isMulti==0:
+            return 'single'
+        else:
+            return 'multi'
+
+class ClosedEndedQuestion(models.Model):
+    category_key = models.ForeignKey(ClosedEndedQuestionCategory, on_delete=models.CASCADE, related_name="question_cat")
+    possible_answers_key = models.ForeignKey(ClosedEndedQuestionPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
+    question_text_key = models.ForeignKey(ClosedEndedQuestionText, on_delete=models.CASCADE, related_name="question_txt")
+    correct_answer_key = models.ForeignKey(ClosedEndedQuestionCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
+    is_multi_key = models.ForeignKey(ClosedEndedQuestionIsMulti, on_delete=models.CASCADE, related_name="is_multi_quest")
 
     
