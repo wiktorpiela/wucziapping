@@ -2,13 +2,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-# from .models import ClosedEndedQuestion, ClosedEndedQuestionCategory
-# from .serializers import ClosedEndedQuestionSerializer
 from django.db.models import Q
+
+from .models import ClosedEndedQuestion, ClosedEndedQuestionCategory
+from .serializers import ClosedEndedQuestionSerializer
   
-# class LearningGetClosedEndedQuestions(generics.ListAPIView):
-#     queryset = ClosedEndedQuestion.objects.all()[:100]
-#     serializer_class = ClosedEndedQuestionSerializer
+class LearningGetClosedEndedQuestions(generics.ListAPIView):
+    queryset = ClosedEndedQuestion.objects.all()[:100]
+    serializer_class = ClosedEndedQuestionSerializer
 
 
 

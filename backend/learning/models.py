@@ -13,7 +13,7 @@ class ClosedEndedQuestionPossibleAnswers(models.Model):
 
     def __str__(self) -> str:
         if self.I != "":
-            return f"{self.A} - {self.B} - {self.C} - {self.D} - {self.E} - {self.F} - {self.G}, - {self.H} - {self.I}"
+            return f"{self.A} - {self.B} - {self.C} - {self.D} - {self.E} - {self.F} - {self.G} - {self.H} - {self.I}"
         else:
             return f"{self.A} - {self.B} - {self.C} - {self.D} - {self.E} - {self.F}"
 
@@ -27,10 +27,13 @@ class ClosedEndedQuestionCategory(models.Model):
     question_category = models.CharField(max_length=200)
 
     def __str__(self) -> str:
-        return self.question_category
+        return self.question_category.split(',')
 
 class ClosedEndedQuestionCorrectAnswer(models.Model):
     correct_answer = models.CharField(max_length=200)
+
+    def __str__(self) -> str:
+        return self.correct_answer
     
 class ClosedEndedQuestionIsMulti(models.Model):
     isMulti = models.SmallIntegerField()
