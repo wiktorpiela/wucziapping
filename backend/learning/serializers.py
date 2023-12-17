@@ -1,11 +1,18 @@
 from rest_framework import serializers
-# from .models import ClosedEndedQuestion
+# from .models import ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer
+
+# class ClosedEndedQuestionCorrectAnswerSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model=ClosedEndedQuestionCorrectAnswer
+#         fields='__all__'
 
 # class ClosedEndedQuestionSerializer(serializers.ModelSerializer):
-#     question_text = serializers.StringRelatedField()
-#     possible_answers = serializers.StringRelatedField()
-#     correct_answer = serializers.StringRelatedField()
+#     category_key = serializers.StringRelatedField()
+#     question_text_key = serializers.StringRelatedField()
+#     possible_answers_key = serializers.StringRelatedField()
+#     correct_answer_key = ClosedEndedQuestionCorrectAnswerSerializer(many=True)
+#     is_multi_key = serializers.StringRelatedField()
 
 #     class Meta:
 #         model = ClosedEndedQuestion
-#         fields = ("id","question_text", "possible_answers", "correct_answer", "is_hard",)
+#         fields = '__all__' 

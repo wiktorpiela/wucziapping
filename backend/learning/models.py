@@ -30,10 +30,7 @@ class ClosedEndedQuestionCategory(models.Model):
         return self.question_category
 
 class ClosedEndedQuestionCorrectAnswer(models.Model):
-    correct_answer = models.CharField(max_length=100)
-
-    def __str__(self) -> str:
-        return self.correct_answer
+    correct_answer = models.CharField(max_length=200)
     
 class ClosedEndedQuestionIsMulti(models.Model):
     isMulti = models.SmallIntegerField()

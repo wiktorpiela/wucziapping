@@ -7,13 +7,19 @@ from rest_framework import generics
 from django.db.models import Q
   
 # class LearningGetClosedEndedQuestions(generics.ListAPIView):
+#     queryset = ClosedEndedQuestion.objects.all()[:100]
 #     serializer_class = ClosedEndedQuestionSerializer
 
-#     def get_queryset(self):
-#         isHard = self.request.data.get("isHard")
-#         qCategory = self.request.data.get("questionCategory")
-#         queryset = ClosedEndedQuestion.objects.filter(Q(is_hard=isHard) & Q(question_category__question_category__icontains=qCategory)).order_by("?")
-#         return queryset
+
+
+
+
+
+    # def get_queryset(self):
+    #     isHard = self.request.data.get("isHard")
+    #     qCategory = self.request.data.get("questionCategory")
+    #     queryset = ClosedEndedQuestion.objects.filter(Q(is_hard=isHard) & Q(question_category__question_category__icontains=qCategory)).order_by("?")
+    #     return queryset
     
 # class QuestionCategoryDifficultyLevel(APIView):
 

@@ -29,21 +29,13 @@ def make_db_tables_from_df(df:pd.DataFrame):
     df=pd.merge(df, question_txt, how='left', on='question').drop(columns='question')
 
     # correct answers ------------------------
-    correct_ans = df['correct_answer'].to_frame().reset_index(drop=True)
-    correct_ans['uni'] = correct_ans['correct_answer'].str.join('')
-    uni_df = correct_ans['uni'].to_frame().drop_duplicates().reset_index()
-    uni_idx = uni_df['index'].values
-    correct_ans=correct_ans.reset_index()
-    correct_ans = correct_ans[correct_ans['index'].isin(uni_idx)]
-    correct_ans['index']=np.arange(1, len(correct_ans)+1)
-    correct_ans.rename(columns={'index':'correct_answer_key'}, inplace=True)
-
-    df['corr_ans_key'] = df['correct_answer'].str.join('')
-    df = pd.merge(df, correct_ans[['correct_answer_key','uni']], how='left', left_on='corr_ans_key', right_on='uni')\
-        .drop(columns=['correct_answer','corr_ans_key','uni'])
-    
-    correct_ans = correct_ans[['correct_answer_key','correct_answer']]
-    correct_ans=correct_ans.explode('correct_answer')
+    correct_ans = df['correct_answer']\
+        .drop_duplicates()\
+        .to_frame()\
+        .reset_index()\
+        .rename(columns={'index':'correct_answer_key'})
+    correct_ans['correct_answer_key'] = np.arange(1, len(correct_ans)+1)
+    df=pd.merge(df, correct_ans, how='left', on='correct_answer').drop(columns='correct_answer')
 
     # isMulti
     is_multi_df = df['isMulti'].drop_duplicates().to_frame()\

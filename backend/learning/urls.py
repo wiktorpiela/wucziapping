@@ -5,5 +5,4 @@ app_name = "learning"
 
 urlpatterns = [
     # path("get-closed-ended-questions/", views.LearningGetClosedEndedQuestions.as_view(), name="learning_cloded_ended_questions"),
-    # path("get-question-types/", views.QuestionCategoryDifficultyLevel.as_view(), name="question_types"),
 ]
