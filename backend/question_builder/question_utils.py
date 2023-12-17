@@ -44,5 +44,13 @@ def make_db_tables_from_df(df:pd.DataFrame):
     
     correct_ans = correct_ans[['correct_answer_key','correct_answer']]
     correct_ans=correct_ans.explode('correct_answer')
+
+    # isMulti
+    is_multi_df = df['isMulti'].drop_duplicates().to_frame()\
+        .reset_index()\
+        .rename(columns={'index':'is_multi_key'})
+    is_multi_df['is_multi_key'] = np.arange(1,len(is_multi_df)+1)
+
+    df = pd.merge(df, is_multi_df, how='left', on='isMulti').drop(columns='isMulti')
     
-    return df, categories, possible_answers, question_txt, correct_ans
+    return df, categories, possible_answers, question_txt, correct_ans, is_multi_df
