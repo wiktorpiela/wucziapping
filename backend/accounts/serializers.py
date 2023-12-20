@@ -4,6 +4,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from .utils import send_custom_email
 
 class UserRegisterSerializer(serializers.ModelSerializer):
 
@@ -40,8 +41,5 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             except IntegrityError:
                 raise serializers.ValidationError("A user with that email already exists.")
             else:
-                send_confrimation_email(email_subject = "Aktywacja konta", 
-                                        template_path="account_activation_email.html",
-                                        user=user,
-                                        email=email)
+                send_custom_email(email_subject="Aktywacja konta", template_path="account_activation_email.html", user=user, email=email)
             return user
