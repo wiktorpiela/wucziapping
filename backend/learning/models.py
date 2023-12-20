@@ -13,9 +13,9 @@ class ClosedEndedQuestionPossibleAnswers(models.Model):
 
     def __str__(self) -> str:
         if self.I != "":
-            return f"{self.A} - {self.B} - {self.C} - {self.D} - {self.E} - {self.F} - {self.G} - {self.H} - {self.I}"
+            return f"{self.A},{self.B},{self.C},{self.D},{self.E},{self.F},{self.G},{self.H},{self.I}"
         else:
-            return f"{self.A} - {self.B} - {self.C} - {self.D} - {self.E} - {self.F}"
+            return f"{self.A},{self.B},{self.C},{self.D},{self.E},{self.F}"
 
 class ClosedEndedQuestionText(models.Model):
     question_text = models.CharField(max_length=200)
