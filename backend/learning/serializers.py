@@ -1,5 +1,14 @@
 from rest_framework import serializers
-from .models import ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, ClosedEndedQuestionPossibleAnswers
+from .models import ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, ClosedEndedQuestionPossibleAnswers, ClosedEndedQuestionCategory
+
+class ClosedEndedQuestionCategorySerializer(serializers.ModelSerializer):
+    category = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model=ClosedEndedQuestionCategory
+        fields=('id', 'category',)
+
+    def get_category(self, obj):
+        return obj.question_category.replace('Wybierz', '').strip()
 
 class ClosedEndedQuestionCorrectAnswerSerializer(serializers.ModelSerializer):
     correct_answers = serializers.SerializerMethodField(read_only=True)
