@@ -1,31 +1,32 @@
 from rest_framework import serializers
-from .models import ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, MyModel
-
-class MySerializer(serializers.ModelSerializer):
-    sliped_fields = serializers.SerializerMethodField(read_only=True)
-    class Meta:
-        model = MyModel
-        fields = ['id', 'sliped_fields']
-
-    def get_sliped_fields(self, obj):
-        f_list =obj.my_field.split(',')
-        return f_list
+from .models import ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, ClosedEndedQuestionPossibleAnswers
 
 class ClosedEndedQuestionCorrectAnswerSerializer(serializers.ModelSerializer):
-    correct_answer = serializers.SerializerMethodField(read_only=True)
+    correct_answers = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = ClosedEndedQuestionCorrectAnswer
-        fields = '__all__'
+        fields = ('correct_answers',)
 
-    def get_correct_answer(self, obj):
+    def get_correct_answers(self, obj):
         f_list =obj.correct_answer.split(',')
         return f_list
 
+class ClosedEndedQuestionPossibleAnswersSerializer(serializers.ModelSerializer):
+    possible_answers = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model=ClosedEndedQuestionPossibleAnswers
+        fields=('possible_answers',)
+
+    def get_possible_answers(self, obj):
+        if obj.I == "":
+            return [obj.A, obj.B, obj.C, obj.D, obj.E, obj.F]
+        else:
+            return [obj.A, obj.B, obj.C, obj.D, obj.E, obj.F, obj.G, obj.H, obj.I]
 
 class ClosedEndedQuestionSerializer(serializers.ModelSerializer):
     category_key = serializers.StringRelatedField()
     question_text_key = serializers.StringRelatedField()
-    possible_answers_key = serializers.StringRelatedField()
+    possible_answers_key = ClosedEndedQuestionPossibleAnswersSerializer()
     correct_answer_key = ClosedEndedQuestionCorrectAnswerSerializer()
     is_multi_key = serializers.StringRelatedField()
 
