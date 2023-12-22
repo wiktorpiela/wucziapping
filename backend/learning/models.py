@@ -1,5 +1,11 @@
 from django.db import models
 
+class MyModel(models.Model):
+    my_field = models.CharField(max_length=20)
+
+    def __str__(self) -> str:
+        return self.my_field
+
 class ClosedEndedQuestionPossibleAnswers(models.Model):
     A = models.CharField(max_length=20)
     B = models.CharField(max_length=20)

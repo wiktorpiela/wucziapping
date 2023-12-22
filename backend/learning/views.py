@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework import generics
 from django.db.models import Q
 
-from .models import ClosedEndedQuestion
-from .serializers import ClosedEndedQuestionSerializer
+from .models import ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, MyModel
+from .serializers import ClosedEndedQuestionSerializer, ClosedEndedQuestionCorrectAnswerSerializer, MySerializer
   
 class LearningGetClosedEndedQuestions(generics.ListAPIView):
     serializer_class = ClosedEndedQuestionSerializer
@@ -14,6 +14,14 @@ class LearningGetClosedEndedQuestions(generics.ListAPIView):
         qCategory = self.request.data.get("questionCategory")
         queryset = ClosedEndedQuestion.objects.filter(Q(category_key__question_category__icontains=qCategory)).order_by("?")
         return queryset
+    
+class Test(generics.ListAPIView):
+    # serializer_class = MySerializer
+    # queryset = MyModel.objects.all()
+
+    serializer_class = ClosedEndedQuestionCorrectAnswerSerializer
+    queryset = ClosedEndedQuestionCorrectAnswer.objects.all()
+
 
 
         
