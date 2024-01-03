@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def make_db_tables_from_df(df:pd.DataFrame):
+def make_db_tables_from_df_closed_ended(df:pd.DataFrame):
 
     # make category table and relation ----------
     df['category']=df['question'].str.split().str[:3].str.join(" ")
@@ -46,3 +46,6 @@ def make_db_tables_from_df(df:pd.DataFrame):
     df = pd.merge(df, is_multi_df, how='left', on='isMulti').drop(columns='isMulti')
     
     return df, categories, possible_answers, question_txt, correct_ans, is_multi_df
+
+def make_db_tables_from_df_open_ended(data:pd.DataFrame):
+    pass

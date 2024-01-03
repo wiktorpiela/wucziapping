@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 from question_builder import QuestionBuilder
-from question_utils import make_db_tables_from_df
+from question_utils import make_db_tables_from_df_closed_ended
 
 no_precambr_data = pd.read_excel(f"{os.getcwd()}\inputs\wucziapping_data.xlsx", sheet_name="reszta")
 precambr_data = pd.read_excel(f"{os.getcwd()}\inputs\wucziapping_data.xlsx", sheet_name="Prekambr")
@@ -35,7 +35,7 @@ for is_prek, if_multi, both_scopes, multiplyIdx, possAns, targetName, scopeName,
 df_final = pd.concat(dfs)
 df_final.to_excel(r'outputs/wucziapping_question.xlsx', index=False)
 
-dfs_to_db = make_db_tables_from_df(df_final)
+dfs_to_db = make_db_tables_from_df_closed_ended(df_final)
 names = ["main_df", "cat_df", "pos_ans_df", "q_txt_df", "corr_ans_df", "is_multi_df"]
 
 for i in range(len(dfs_to_db)):
