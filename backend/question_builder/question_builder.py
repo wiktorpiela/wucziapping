@@ -98,7 +98,7 @@ class QuestionBuilder:
         else:
             data=self.inputDataNonPrecambrian
 
-        targets = data[colNameTarget].unique()
+        targets = data[(data[colNameScope]!='brak')][colNameTarget].unique()
         scopes = []
         question_text = []
 
