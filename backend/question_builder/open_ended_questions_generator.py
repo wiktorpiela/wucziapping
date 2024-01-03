@@ -28,3 +28,9 @@ for dataSource, isClassic, colNameTarget, colNameScope, questionTxt in criteria:
 
 df_out = pd.concat(dfs, ignore_index=True).drop_duplicates()
 df_out.to_excel(r'outputs/open_ended/wucziapping_question.xlsx', index=False)
+
+dfs_to_db = make_db_tables_from_df_open_ended(df_out)
+names = ['main_df', 'cat_df', 'scopes_df', 'wrong_scopes_df', 'quest_txt_df']
+
+for i in range(len(dfs_to_db)):
+    dfs_to_db[i].to_csv(fr'outputs/open_ended/{names[i]}.csv', index=False)
