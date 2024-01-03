@@ -90,8 +90,8 @@ class QuestionBuilder:
 
         return temp_possible_answers, temp_correct_answers
     
-    def prepare_open_ended_classic(self, dataSource:str, colNameTarget:str, colNameScope:str,
-                                   questionTxt:str):
+    def prepare_open_ended(self, dataSource:str, isClassic:bool, colNameTarget:str, 
+                           colNameScope:str, questionTxt:str):
 
         if dataSource == "precambrian":
             data = self.inputDataPrecambrian
@@ -101,21 +101,29 @@ class QuestionBuilder:
         targets = data[(data[colNameScope]!='brak')][colNameTarget].unique()
         scopes = []
         question_text = []
+        wrong_scopes = []
 
         for target in targets:
             scope_core = data[(data[colNameTarget]==target) & (data[colNameScope]!='brak')][colNameScope].unique()
             temp_scope = ','.join(np.flip(scope_core))
             scopes.append(temp_scope)
+
+            if not isClassic:
+                wrong_array = data[(data[colNameTarget]!=target) & (data[colNameScope]!='brak')][colNameScope].unique()
+                sampleSize = np.random.randint(1, 4)
+                wrong_scope = np.random.choice(wrong_array, sampleSize, replace=False)
+                wrong_scope = ','.join(wrong_scope)
+            else:
+                wrong_scope = np.nan
+
+            wrong_scopes.append(wrong_scope)
             question_text.append(f"{questionTxt} {target}")
 
         df_out = pd.DataFrame({
             'question': question_text,
-            'scope': scopes
+            'scope': scopes,
+            'wrongScope': wrong_scopes,
         })
-
-        df_out['type'] = 'classic'
-        df_out['isHard'] = np.nan
-        df_out['wrongScope'] = np.nan
 
         return df_out
         
