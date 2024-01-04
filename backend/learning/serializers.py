@@ -64,7 +64,11 @@ class OpenEndedWrongScopeSerializer(serializers.ModelSerializer):
         fields = ('question_wrong_scope',)
 
     def get_question_wrong_scope(self, obj):
-        f_list = obj.question_wrong_scope.split(',')
+        field_val =  obj.question_wrong_scope
+        if field_val == '':
+            return []
+        else:
+            f_list = field_val.split(',')
         return f_list
 
 
