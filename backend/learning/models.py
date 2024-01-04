@@ -51,4 +51,34 @@ class ClosedEndedQuestion(models.Model):
     correct_answer_key = models.ForeignKey(ClosedEndedQuestionCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
     is_multi_key = models.ForeignKey(ClosedEndedQuestionIsMulti, on_delete=models.CASCADE, related_name="is_multi_quest")
 
+# open ended question models ----------------------
+
+class OpenEndedCategory(models.Model):
+    question_category = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.question_category
     
+class OpenEndedQuestionText(models.Model):
+    question_text = models.CharField(max_length=200)
+
+    def __str__(self) -> str:
+        return self.question_text
+    
+class OpenEndedScope(models.Model):
+    question_scope = models.CharField(max_length=300)
+
+    def __str__(self) -> str:
+        return self.question_scope
+
+class OpenEndedWrongScope(models.Model):
+    question_wrong_scope = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.question_wrong_scope
+    
+class OpenEndedQuestion(models.Model):
+    category_key = models.ForeignKey(OpenEndedCategory, on_delete=models.CASCADE, related_name='question_cat_open')
+    scope_key = models.ForeignKey(OpenEndedScope, on_delete=models.CASCADE, related_name='question_scope_open')
+    wrong_scope_key = models.ForeignKey(OpenEndedWrongScope, on_delete=models.CASCADE, related_name='question_wrong_scope_open')
+    quest_txt_key = models.ForeignKey(OpenEndedQuestionText, on_delete=models.CASCADE, related_name='question_txt_open')   
