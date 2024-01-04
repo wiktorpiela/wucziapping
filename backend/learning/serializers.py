@@ -55,13 +55,24 @@ class OpenEndedScopeSerializer(serializers.ModelSerializer):
     def get_question_scope(self, obj):
         f_list = obj.question_scope.split(',')
         return f_list
+    
+class OpenEndedWrongScopeSerializer(serializers.ModelSerializer):
+    question_wrong_scope = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = OpenEndedWrongScope
+        fields = ('question_wrong_scope',)
+
+    def get_question_wrong_scope(self, obj):
+        f_list = obj.question_wrong_scope.split(',')
+        return f_list
 
 
 class OpenEndedQuestionSerializer(serializers.ModelSerializer):
     category_key = serializers.StringRelatedField()
     quest_txt_key= serializers.StringRelatedField()
     scope_key = OpenEndedScopeSerializer()
-    wrong_scope_key = serializers.StringRelatedField()
+    wrong_scope_key = OpenEndedWrongScopeSerializer()
 
     class Meta:
         model = OpenEndedQuestion
