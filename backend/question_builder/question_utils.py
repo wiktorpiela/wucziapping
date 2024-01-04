@@ -88,3 +88,16 @@ def make_db_tables_from_df_open_ended(df:pd.DataFrame):
     return df, categories, scopes_df, wrong_scopes_df, quest_txt_df
 
 
+class DataFrameToDatabaseTables:
+
+    def __init__(self, inputDataFrame:pd.DataFrame):
+        self.inputDataFrame = inputDataFrame
+
+    def prepare_closed_ended_tables(self):
+        pass
+
+    def prepare_open_ended_tables(self):
+        pass
+
+
+

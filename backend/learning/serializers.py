@@ -73,10 +73,10 @@ class OpenEndedWrongScopeSerializer(serializers.ModelSerializer):
 
 
 class OpenEndedQuestionSerializer(serializers.ModelSerializer):
-    category_key = serializers.StringRelatedField()
-    quest_txt_key= serializers.StringRelatedField()
-    scope_key = OpenEndedScopeSerializer()
-    wrong_scope_key = OpenEndedWrongScopeSerializer()
+    # category_key = serializers.StringRelatedField()
+    # quest_txt_key= serializers.StringRelatedField()
+    # scope_key = OpenEndedScopeSerializer()
+    # wrong_scope_key = OpenEndedWrongScopeSerializer()
 
     class Meta:
         model = OpenEndedQuestion
