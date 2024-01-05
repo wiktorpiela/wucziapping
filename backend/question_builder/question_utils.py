@@ -96,9 +96,25 @@ class DataFrameToDatabaseTables:
     def prepare_closed_ended_tables(self):
         pass
 
-    def prepare_open_ended_tables(self):
+    def prepare_open_ended_tables(self, *colNames):
+        dfs_out = []
+        for col in colNames:
+            new_main_df, temp_rel_df = self.make_relation(self.inputDataFrame, col)
+            self.inputDataFrame = new_main_df
+            dfs_out.append(temp_rel_df)
+        return self.inputDataFrame, dfs_out
 
-        
+    @staticmethod
+    def make_relation(df, colName):
+        rel_df = df[colName].drop_duplicates()\
+            .drop_duplicates()\
+            .to_frame()\
+            .reset_index()\
+            .rename(columns={'index':f'{colName}_key'})
+        rel_df[f'{colName}_key'] = np.arange(1, len(rel_df)+1)
+        df = pd.merge(df, rel_df, how='left', on=colName).drop(columns=colName)
+
+        return df, rel_df
 
 
 
