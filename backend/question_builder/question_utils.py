@@ -98,13 +98,15 @@ class DataFrameToDatabaseTables:
 
     def prepare_open_ended_tables(self, *colNames):
         data = self.inputDataFrame
-        data['category'] = data['question'].str.split().str[:3].str.join(" ")
+        data['category'] = data['question'].str.split().str[:-1].str.join(" ")
+        data['question'] = data['question'].str.split().str[-1]
         col_names_list = ['category'] + list(colNames)
         dfs_out = []
         for col in col_names_list:
             new_main_df, temp_rel_df = self.make_relation(data, col)
             data = new_main_df
             dfs_out.append(temp_rel_df)
+        data.insert(0, 'id', np.arange(1, len(data)+1))
         return data, dfs_out
 
     @staticmethod
