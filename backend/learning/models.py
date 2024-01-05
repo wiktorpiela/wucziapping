@@ -79,6 +79,6 @@ class OpenEndedWrongScope(models.Model):
     
 class OpenEndedQuestion(models.Model):
     category_key = models.ForeignKey(OpenEndedCategory, on_delete=models.CASCADE, related_name='question_cat_open')
+    quest_txt_key = models.ForeignKey(OpenEndedQuestionText, on_delete=models.CASCADE, related_name='question_txt_open')
     scope_key = models.ForeignKey(OpenEndedScope, on_delete=models.CASCADE, related_name='question_scope_open')
-    wrong_scope_key = models.ForeignKey(OpenEndedWrongScope, on_delete=models.CASCADE, related_name='question_wrong_scope_open')
-    quest_txt_key = models.ForeignKey(OpenEndedQuestionText, on_delete=models.CASCADE, related_name='question_txt_open')   
+    wrong_scope_key = models.ForeignKey(OpenEndedWrongScope, on_delete=models.CASCADE, related_name='question_wrong_scope_open')   

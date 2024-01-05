@@ -100,8 +100,9 @@ class QuestionBuilder:
 
         targets = data[(data[colNameScope]!='brak')][colNameTarget].unique()
         scopes = []
-        question_text = []
+        category = []
         wrong_scopes = []
+        targets_out = []
 
         for target in targets:
             scope_core = data[(data[colNameTarget]==target) & (data[colNameScope]!='brak')][colNameScope].unique()
@@ -117,10 +118,12 @@ class QuestionBuilder:
                 wrong_scope = np.nan
 
             wrong_scopes.append(wrong_scope)
-            question_text.append(f"{questionTxt} {target}")
+            category.append(questionTxt)
+            targets_out.append(target)
 
         df_out = pd.DataFrame({
-            'question': question_text,
+            'category': category,
+            'target': targets_out,
             'scope': scopes,
             'wrong_scope': wrong_scopes,
         })
