@@ -47,47 +47,6 @@ def make_db_tables_from_df_closed_ended(df:pd.DataFrame):
     
     return df, categories, possible_answers, question_txt, correct_ans, is_multi_df
 
-def make_db_tables_from_df_open_ended(df:pd.DataFrame):
-
-    # categories
-    df['category'] = df['question'].str.split().str[:3].str.join(" ")
-    categories = df['category'].drop_duplicates()\
-        .to_frame()\
-        .reset_index()\
-        .rename(columns={'index':'category_key'})
-    categories['category_key'] = np.arange(1, len(categories)+1)
-    df = pd.merge(df, categories, how='left', on='category').drop(columns='category')
-
-    #scopes
-    scopes_df = df['scope'].drop_duplicates()\
-        .drop_duplicates()\
-        .to_frame()\
-        .reset_index()\
-        .rename(columns={'index':'scope_key'})
-    scopes_df['scope_key'] = np.arange(1, len(scopes_df)+1)
-    df = pd.merge(df, scopes_df, how='left', on='scope').drop(columns='scope')
-
-    # wrong scopes
-    wrong_scopes_df = df['wrongScope'].drop_duplicates()\
-        .drop_duplicates()\
-        .to_frame()\
-        .reset_index()\
-        .rename(columns={'index':'wrong_scope_key'})
-    wrong_scopes_df['wrong_scope_key'] = np.arange(1, len(wrong_scopes_df)+1)
-    df = pd.merge(df, wrong_scopes_df, how='left', on='wrongScope').drop(columns='wrongScope')
-
-    # question txt
-    quest_txt_df = df['question'].drop_duplicates()\
-        .drop_duplicates()\
-        .to_frame()\
-        .reset_index()\
-        .rename(columns={'index':'quest_txt_key'})
-    quest_txt_df['quest_txt_key'] = np.arange(1, len(quest_txt_df)+1)
-    df = pd.merge(df, quest_txt_df, how='left', on='question').drop(columns='question')
-
-    return df, categories, scopes_df, wrong_scopes_df, quest_txt_df
-
-
 class DataFrameToDatabaseTables:
 
     def __init__(self, inputDataFrame:pd.DataFrame):
@@ -107,7 +66,7 @@ class DataFrameToDatabaseTables:
             data = new_main_df
             dfs_out.append(temp_rel_df)
         data.insert(0, 'id', np.arange(1, len(data)+1))
-        return data, dfs_out
+        return [data] + dfs_out
 
     @staticmethod
     def make_relation(df, colName):

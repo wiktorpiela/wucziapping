@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 from question_builder import QuestionBuilder
-from question_utils import make_db_tables_from_df_open_ended
+from question_utils import DataFrameToDatabaseTables
 
 
 no_precambr_data = pd.read_excel(f"{os.getcwd()}\inputs\wucziapping_data.xlsx", sheet_name="reszta")
@@ -10,14 +10,14 @@ test = QuestionBuilder(no_precambr_data, precambr_data)
 
 dfs=[]
 criteria=[
-    ('non-precambrian', True, 'SYSTEM', 'PIETRO', 'piętra systemu'),
-    ('non-precambrian', False, 'SYSTEM', 'PIETRO', 'piętra systemu'),
-    ('non-precambrian', True, 'ODDZIAL', 'PIETRO', 'piętra odziału'),
-    ('non-precambrian', False, 'ODDZIAL', 'PIETRO', 'piętra odziału'),
+    ('non-precambrian', True, 'SYSTEM', 'PIETRO', 'piętro systemu'),
+    ('non-precambrian', False, 'SYSTEM', 'PIETRO', 'piętro systemu'),
+    ('non-precambrian', True, 'ODDZIAL', 'PIETRO', 'piętro odziału'),
+    ('non-precambrian', False, 'ODDZIAL', 'PIETRO', 'piętro odziału'),
     ('precambrian', True,  'ERA', 'SYSTEM', 'Prekambr - system ery'),
     ('precambrian', False,  'ERA', 'SYSTEM', 'Prekambr - system ery'),
-    ('precambrian', True, 'Eon', 'ERA', 'Prekambr - erę enou'),
-    ('precambrian', False, 'Eon', 'ERA', 'Prekambr - erę enou'),
+    ('precambrian', True, 'Eon', 'ERA', 'Prekambr - era enou'),
+    ('precambrian', False, 'Eon', 'ERA', 'Prekambr - era enou'),
 ]
 
 for dataSource, isClassic, colNameTarget, colNameScope, questionTxt in criteria:
@@ -29,8 +29,10 @@ for dataSource, isClassic, colNameTarget, colNameScope, questionTxt in criteria:
 df_out = pd.concat(dfs, ignore_index=True).drop_duplicates()
 df_out.to_excel(r'outputs/open_ended/wucziapping_question.xlsx', index=False)
 
-dfs_to_db = make_db_tables_from_df_open_ended(df_out)
-names = ['main_df', 'cat_df', 'scopes_df', 'wrong_scopes_df', 'quest_txt_df']
+df_to_db_obj = DataFrameToDatabaseTables(df_out)
+dfs_list = df_to_db_obj.prepare_open_ended_tables('question', 'scope', 'wrong_scope')
 
-for i in range(len(dfs_to_db)):
-    dfs_to_db[i].to_csv(fr'outputs/open_ended/{names[i]}.csv', index=False)
+names = ['main_df', 'cat_df', 'quest_text_df', 'scope_df', 'wrong_scope_df']
+
+for i in range(len(dfs_list)):
+    dfs_list[i].to_csv(fr'outputs/open_ended/{names[i]}.csv', index=False)
