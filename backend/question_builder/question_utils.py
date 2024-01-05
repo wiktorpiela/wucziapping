@@ -97,7 +97,8 @@ class DataFrameToDatabaseTables:
         pass
 
     def prepare_open_ended_tables(self):
-        pass
+
+        
 
 
 

@@ -122,7 +122,7 @@ class QuestionBuilder:
         df_out = pd.DataFrame({
             'question': question_text,
             'scope': scopes,
-            'wrongScope': wrong_scopes,
+            'wrong_scope': wrong_scopes,
         })
 
         return df_out

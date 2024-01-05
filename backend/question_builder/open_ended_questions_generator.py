@@ -10,14 +10,14 @@ test = QuestionBuilder(no_precambr_data, precambr_data)
 
 dfs=[]
 criteria=[
-    ('non-precambrian', True, 'SYSTEM', 'PIETRO', 'Wypisz piętro systemu'),
-    ('non-precambrian', False, 'SYSTEM', 'PIETRO', 'Wypisz piętro systemu'),
-    ('non-precambrian', True, 'ODDZIAL', 'PIETRO', 'Wypisz piętro odziału'),
-    ('non-precambrian', False, 'ODDZIAL', 'PIETRO', 'Wypisz piętro odziału'),
-    ('precambrian', True,  'ERA', 'SYSTEM', 'Wypisz system ery'),
-    ('precambrian', False,  'ERA', 'SYSTEM', 'Wypisz system ery'),
-    ('precambrian', True, 'Eon', 'ERA', 'Wypisz erę enou'),
-    ('precambrian', False, 'Eon', 'ERA', 'Wypisz erę enou'),
+    ('non-precambrian', True, 'SYSTEM', 'PIETRO', 'piętra systemu'),
+    ('non-precambrian', False, 'SYSTEM', 'PIETRO', 'piętra systemu'),
+    ('non-precambrian', True, 'ODDZIAL', 'PIETRO', 'piętra odziału'),
+    ('non-precambrian', False, 'ODDZIAL', 'PIETRO', 'piętra odziału'),
+    ('precambrian', True,  'ERA', 'SYSTEM', 'Prekambr - system ery'),
+    ('precambrian', False,  'ERA', 'SYSTEM', 'Prekambr - system ery'),
+    ('precambrian', True, 'Eon', 'ERA', 'Prekambr - erę enou'),
+    ('precambrian', False, 'Eon', 'ERA', 'Prekambr - erę enou'),
 ]
 
 for dataSource, isClassic, colNameTarget, colNameScope, questionTxt in criteria:
