@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import (ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, ClosedEndedQuestionPossibleAnswers, 
-                     ClosedEndedQuestionCategory, OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope,)
+from .models import (ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, ClosedEndedQuestionPossibleAnswers, ClosedEndedQuestionCategory, OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope,)
 
 class ClosedEndedQuestionCategorySerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField(read_only=True)
