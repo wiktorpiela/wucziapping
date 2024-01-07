@@ -59,11 +59,11 @@ class OpenEndedCategory(models.Model):
     def __str__(self) -> str:
         return self.question_category
     
-class OpenEndedQuestionText(models.Model):
-    question_text = models.CharField(max_length=200)
+class OpenEndedTarget(models.Model):
+    question_target = models.CharField(max_length=200)
 
     def __str__(self) -> str:
-        return self.question_text
+        return self.question_target
     
 class OpenEndedScope(models.Model):
     question_scope = models.CharField(max_length=300)
@@ -78,7 +78,7 @@ class OpenEndedWrongScope(models.Model):
         return self.question_wrong_scope
     
 class OpenEndedQuestion(models.Model):
-    category_key = models.ForeignKey(OpenEndedCategory, on_delete=models.CASCADE, related_name='question_cat_open')
-    quest_txt_key = models.ForeignKey(OpenEndedQuestionText, on_delete=models.CASCADE, related_name='question_txt_open')
-    scope_key = models.ForeignKey(OpenEndedScope, on_delete=models.CASCADE, related_name='question_scope_open')
-    wrong_scope_key = models.ForeignKey(OpenEndedWrongScope, on_delete=models.CASCADE, related_name='question_wrong_scope_open')   
+    category = models.ForeignKey(OpenEndedCategory, on_delete=models.CASCADE, related_name='question_cat_open')
+    target = models.ForeignKey(OpenEndedTarget, on_delete=models.CASCADE, related_name='question_target_open')
+    scope = models.ForeignKey(OpenEndedScope, on_delete=models.CASCADE, related_name='question_scope_open')
+    wrong_scope = models.ForeignKey(OpenEndedWrongScope, on_delete=models.CASCADE, related_name='question_wrong_scope_open')   

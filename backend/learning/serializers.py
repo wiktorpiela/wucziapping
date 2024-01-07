@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from .models import (ClosedEndedQuestion, ClosedEndedQuestionCorrectAnswer, ClosedEndedQuestionPossibleAnswers, 
-                     ClosedEndedQuestionCategory, 
-                     #OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope,
-                     )
+                     ClosedEndedQuestionCategory, OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope,)
 
 class ClosedEndedQuestionCategorySerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField(read_only=True)
@@ -46,40 +44,39 @@ class ClosedEndedQuestionSerializer(serializers.ModelSerializer):
         model = ClosedEndedQuestion
         fields = '__all__' 
 
-# open ended questions serializers
-        
-# class OpenEndedScopeSerializer(serializers.ModelSerializer):
-#     question_scope = serializers.SerializerMethodField(read_only=True)
-#     class Meta:
-#         model=OpenEndedScope
-#         fields = ('question_scope',)
+# open ended questions serializers      
+class OpenEndedScopeSerializer(serializers.ModelSerializer):
+    question_scope = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model=OpenEndedScope
+        fields = ('question_scope',)
 
-#     def get_question_scope(self, obj):
-#         f_list = obj.question_scope.split(',')
-#         return f_list
+    def get_question_scope(self, obj):
+        f_list = obj.question_scope.split(',')
+        return f_list
     
-# class OpenEndedWrongScopeSerializer(serializers.ModelSerializer):
-#     question_wrong_scope = serializers.SerializerMethodField(read_only=True)
+class OpenEndedWrongScopeSerializer(serializers.ModelSerializer):
+    question_wrong_scope = serializers.SerializerMethodField(read_only=True)
 
-#     class Meta:
-#         model = OpenEndedWrongScope
-#         fields = ('question_wrong_scope',)
+    class Meta:
+        model = OpenEndedWrongScope
+        fields = ('question_wrong_scope',)
 
-#     def get_question_wrong_scope(self, obj):
-#         field_val =  obj.question_wrong_scope
-#         if field_val == '':
-#             return []
-#         else:
-#             f_list = field_val.split(',')
-#         return f_list
+    def get_question_wrong_scope(self, obj):
+        field_val =  obj.question_wrong_scope
+        if field_val == '':
+            return []
+        else:
+            f_list = field_val.split(',')
+        return f_list
 
 
-# class OpenEndedQuestionSerializer(serializers.ModelSerializer):
-#     category_key = serializers.StringRelatedField()
-#     quest_txt_key= serializers.StringRelatedField()
-#     scope_key = OpenEndedScopeSerializer()
-#     wrong_scope_key = OpenEndedWrongScopeSerializer()
+class OpenEndedQuestionSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()
+    target = serializers.StringRelatedField()
+    scope = OpenEndedScopeSerializer()
+    wrong_scope = OpenEndedWrongScopeSerializer()
 
-#     class Meta:
-#         model = OpenEndedQuestion
-#         fields = '__all__'
+    class Meta:
+        model = OpenEndedQuestion
+        fields = '__all__'

@@ -2,10 +2,10 @@ from rest_framework import generics
 from django.db.models import Q
 
 from .models import (ClosedEndedQuestion, ClosedEndedQuestionPossibleAnswers, ClosedEndedQuestionCategory,
-                     #OpenEndedQuestion,
+                     OpenEndedQuestion,
                      )
 from .serializers import (ClosedEndedQuestionSerializer, ClosedEndedQuestionPossibleAnswersSerializer, ClosedEndedQuestionCategorySerializer,
-                          #OpenEndedQuestionSerializer
+                          OpenEndedQuestionSerializer
                           )
   
 class GetClosedEndedQuestions(generics.ListAPIView):
@@ -21,9 +21,9 @@ class ClosedEndedQuestionsCategories(generics.ListAPIView):
     queryset = ClosedEndedQuestionCategory.objects.all()
 
     
-# class Test(generics.ListAPIView):
-#     serializer_class = OpenEndedQuestionSerializer
-#     queryset = OpenEndedQuestion.objects.all()
+class Test(generics.ListAPIView):
+    serializer_class = OpenEndedQuestionSerializer
+    queryset = OpenEndedQuestion.objects.all()
 
 
 
