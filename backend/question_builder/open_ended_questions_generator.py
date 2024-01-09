@@ -30,7 +30,7 @@ df_out = pd.concat(dfs, ignore_index=True).drop_duplicates()
 df_out.to_excel(r'outputs/open_ended/wucziapping_question.xlsx', index=False)
 
 df_to_db_obj = DataFrameToDatabaseTables(df_out)
-dfs_list = df_to_db_obj.prepare_open_ended_tables('category', 'target', 'scope', 'wrong_scope')
+dfs_list = df_to_db_obj.prepare_relational_tables('category', 'target', 'scope', 'wrong_scope')
 
 names = ['main_df', 'cat_df', 'target_df', 'scope_df', 'wrong_scope_df']
 

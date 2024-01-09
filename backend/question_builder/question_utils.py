@@ -52,10 +52,7 @@ class DataFrameToDatabaseTables:
     def __init__(self, inputDataFrame:pd.DataFrame):
         self.inputDataFrame = inputDataFrame
 
-    def prepare_closed_ended_tables(self):
-        pass
-
-    def prepare_open_ended_tables(self, *colNames):
+    def prepare_relational_tables(self, *colNames):
         data = self.inputDataFrame
         dfs_out = []
         for col in colNames:
