@@ -16,7 +16,7 @@ class ClosedEndedIsMulti(models.Model):
     question_is_multi = models.SmallIntegerField()
 
     def __str__(self) -> str:
-        return 'single' if self.isMulti==0 else 'multi'
+        return 'single' if self.question_is_multi==0 else 'multi'
     
 class ClosedEndedPossibleAnswers(models.Model):
     question_possible_answers = models.CharField(max_length=300)

@@ -1,24 +1,24 @@
 from rest_framework import serializers
-from .models import ClosedEndedCorrectAnswer, ClosedEndedPossibleAnswers, ClosedEndedQuestion, OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope,)
+from .models import ClosedEndedCorrectAnswer, ClosedEndedPossibleAnswers, ClosedEndedQuestion, OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope
 
 class ClosedEndedCorrectAnswerSerializer(serializers.ModelSerializer):
-    correct_answers = serializers.SerializerMethodField(read_only=True)
+    question_correct_answer = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = ClosedEndedCorrectAnswer
-        fields = ('correct_answers',)
+        fields = ('question_correct_answer',)
 
-    def get_question_correct_answers(self, obj):
-        f_list =obj.correct_answer.split(',')
+    def get_question_correct_answer(self, obj):
+        f_list =obj.question_correct_answer.split(',')
         return f_list
 
 class ClosedEndedPossibleAnswersSerializer(serializers.ModelSerializer):
-    possible_answers = serializers.SerializerMethodField(read_only=True)
+    question_possible_answers = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model=ClosedEndedPossibleAnswers
-        fields=('possible_answers',)
+        fields=('question_possible_answers',)
 
     def get_question_possible_answers(self, obj):
-        f_list =obj.possible_answers.split(',')
+        f_list =obj.question_possible_answers.split(',')
         return f_list
 
 class ClosedEndedQuestionSerializer(serializers.ModelSerializer):
