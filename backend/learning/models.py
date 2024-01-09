@@ -1,55 +1,41 @@
 from django.db import models
 
-class ClosedEndedQuestionPossibleAnswers(models.Model):
-    A = models.CharField(max_length=20)
-    B = models.CharField(max_length=20)
-    C = models.CharField(max_length=20)
-    D = models.CharField(max_length=20)
-    E = models.CharField(max_length=20)
-    F = models.CharField(max_length=20)
-    G = models.CharField(max_length=20, null=True)
-    H = models.CharField(max_length=20, null=True)
-    I = models.CharField(max_length=20, null=True)
-
-    def __str__(self) -> str:
-        if self.I != "":
-            return f"{self.A},{self.B},{self.C},{self.D},{self.E},{self.F},{self.G},{self.H},{self.I}"
-        else:
-            return f"{self.A},{self.B},{self.C},{self.D},{self.E},{self.F}"
-
-class ClosedEndedQuestionText(models.Model):
-    question_text = models.CharField(max_length=200)
-
-    def __str__(self) -> str:
-        return self.question_text
-    
-class ClosedEndedQuestionCategory(models.Model):
-    question_category = models.CharField(max_length=200)
+class ClosedEndedCategory(models.Model):
+    question_category = models.CharField(max_length=25)
 
     def __str__(self) -> str:
         return self.question_category
-
-class ClosedEndedQuestionCorrectAnswer(models.Model):
-    correct_answer = models.CharField(max_length=200)
-
-    def __str__(self) -> str:
-        return self.correct_answer
     
-class ClosedEndedQuestionIsMulti(models.Model):
-    isMulti = models.SmallIntegerField()
+class ClosedEndedCorrectAnswer(models.Model):
+    question_correct_answer = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.question_correct_answer
+    
+class ClosedEndedIsMulti(models.Model):
+    question_is_multi = models.SmallIntegerField()
 
     def __str__(self) -> str:
-        if self.isMulti==0:
-            return 'single'
-        else:
-            return 'multi'
+        return 'single' if self.isMulti==0 else 'multi'
+    
+class ClosedEndedPossibleAnswers(models.Model):
+    question_possible_answers = models.CharField(max_length=300)
+
+    def __str__(self) -> str:
+        return self.question_possible_answers
+    
+class ClosedEndedTarget(models.Model):
+    question_target = models.CharField(max_length=25)
+
+    def __str__(self) -> str:
+        return self.question_target
 
 class ClosedEndedQuestion(models.Model):
-    category_key = models.ForeignKey(ClosedEndedQuestionCategory, on_delete=models.CASCADE, related_name="question_cat")
-    possible_answers_key = models.ForeignKey(ClosedEndedQuestionPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
-    question_text_key = models.ForeignKey(ClosedEndedQuestionText, on_delete=models.CASCADE, related_name="question_txt")
-    correct_answer_key = models.ForeignKey(ClosedEndedQuestionCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
-    is_multi_key = models.ForeignKey(ClosedEndedQuestionIsMulti, on_delete=models.CASCADE, related_name="is_multi_quest")
+    category = models.ForeignKey(ClosedEndedCategory, on_delete=models.CASCADE, related_name="question_cat")
+    target = models.ForeignKey(ClosedEndedTarget, on_delete=models.CASCADE, related_name="question_txt")
+    possible_answers = models.ForeignKey(ClosedEndedPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
+    correct_answer = models.ForeignKey(ClosedEndedCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
+    is_multi = models.ForeignKey(ClosedEndedIsMulti, on_delete=models.CASCADE, related_name="is_multi_quest")
 
 # open ended question models ----------------------
 
