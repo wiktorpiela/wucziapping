@@ -13,7 +13,7 @@ class QuestionBuilder:
     def prepare_closed_ended(self, isPrecambrian:bool, isMulti:bool, 
                              bothScopes:bool, multiplyIndex:int, 
                              nPossibleAnswers:int, colNameTarget:str, 
-                             colNameScope:str, questionTxt:str,
+                             colNameScope:str, categoryTxt:str,
                              excludeEmptyFromScope:bool=True, 
                              targetExclusionList:list=[]):
 
@@ -40,30 +40,34 @@ class QuestionBuilder:
         if excludeEmptyFromScope:
             scope_list = np.delete(scope_list, np.where(scope_list=="brak"))
         
-        question_text = []
+        category = []
+        targets=[]
         correct_answers = []
         possible_answers = []
 
         for target in target_list:
-            question_text.append(f"{questionTxt} {target}")
+            category.append(categoryTxt)
+            targets.append(target)
             correct_array = data[data[colNameTarget]==target][colNameScope].unique()
             wrong_array = [element for element in scope_list if element not in correct_array]
 
             pos, corr = self.make_answers(correct_array, wrong_array, nPossibleAnswers, isMulti)
-            possible_answers.append(pos)
-            correct_answers.append(corr)
+            possible_answers.append(','.join(pos))
+            correct_answers.append(','.join(corr))
 
         df1=pd.DataFrame({
-            'question':question_text,
+            'category': category,
+            'target': targets,
+            'possible_answers':possible_answers,
             'correct_answer':correct_answers
         })
 
-        df2=pd.DataFrame(possible_answers)
-        df2.columns = self.colNames[:len(df2.columns)]
+        # df2=pd.DataFrame(possible_answers)
+        # df2.columns = self.colNames[:len(df2.columns)]
         
-        df_final = pd.concat([df1, df2], axis=1)
+        # df_final = pd.concat([df1, df2], axis=1)
 
-        return df_final
+        return df1
         
     @staticmethod
     def make_answers(correct_array:list, wrong_array:list, maxIndex:int, isMulti:bool):
