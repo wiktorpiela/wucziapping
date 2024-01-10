@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ClosedEndedCorrectAnswer, ClosedEndedPossibleAnswers, ClosedEndedQuestion, OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope
+from .models import ClosedEndedCorrectAnswer, ClosedEndedPossibleAnswers, ClosedEndedQuestion, OpenEndedQuestion, OpenEndedScope, OpenEndedWrongScope, FlashcardWrongTarget, FlashcardQuestion
 
 class ClosedEndedCorrectAnswerSerializer(serializers.ModelSerializer):
     question_correct_answer = serializers.SerializerMethodField(read_only=True)
@@ -68,3 +68,21 @@ class OpenEndedQuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = OpenEndedQuestion
         fields = '__all__'
+
+# flashcards question serializers ----
+class FlashcardWrongTargetSerializer(serializers.ModelSerializer):
+    question_wrong_target = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model=FlashcardWrongTarget
+        fields='__all__'
+
+    def get_question_wrong_target(self, obj):
+        field_val = obj.question_wrong_target
+        return [] if field_val=='' else field_val.split(',')
+    
+class FlashcardQuestionSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()
+    scope = serializers.StringRelatedField()
+    target_correct = serializers.StringRelatedField()
+    target_wrong = FlashcardWrongTargetSerializer()
