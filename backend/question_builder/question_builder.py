@@ -146,11 +146,11 @@ class QuestionBuilder:
         category = []
 
         for scope in scopes:
-            temp_corr_target = data[data[scopeCol]==scope][targetCol].unique()[0]
+            temp_corr_target = data[(data[scopeCol]==scope) & (data[targetCol]!='brak')][targetCol].unique()[0]
             temp_wrong_target = np.nan
 
             if is_hard:
-                temp_wrong_target = data[data[scopeCol]!=scope][targetCol].unique()
+                temp_wrong_target = data[(data[scopeCol]!=scope) & (data[targetCol]!='brak')][targetCol].unique()
                 temp_wrong_target = np.random.choice(temp_wrong_target, 5, replace=False)
                 temp_wrong_target = ','.join(temp_wrong_target)
 
@@ -164,7 +164,9 @@ class QuestionBuilder:
             'scope': scopes_out,
             'target_correct': targets_corr,
             'target_wrong': targets_wrong
-        })
+        })\
+        .drop_duplicates()\
+        .reset_index(drop=True)
 
         return df_out
 
