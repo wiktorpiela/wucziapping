@@ -95,10 +95,10 @@ class FlashcardWrongTarget(models.Model):
         return self.question_wrong_scope
     
 class FlashcardQuestion(models.Model):
-    category = models.ForeignKey()
-    scope = models.ForeignKey()
-    target_correct = models.ForeignKey()
-    target_wrong = models.ForeignKey()
+    category = models.ForeignKey(FlashcardCategory, on_delete = models.CASCADE)
+    scope = models.ForeignKey(FlashcardScope, on_delete = models.CASCADE)
+    target_correct = models.ForeignKey(FlashcardTarget, on_delete = models.CASCADE)
+    target_wrong = models.ForeignKey(FlashcardWrongTarget, on_delete = models.CASCADE)
 
 
 
