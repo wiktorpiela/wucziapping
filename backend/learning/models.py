@@ -67,4 +67,38 @@ class OpenEndedQuestion(models.Model):
     category = models.ForeignKey(OpenEndedCategory, on_delete=models.CASCADE, related_name='question_cat_open')
     target = models.ForeignKey(OpenEndedTarget, on_delete=models.CASCADE, related_name='question_target_open')
     scope = models.ForeignKey(OpenEndedScope, on_delete=models.CASCADE, related_name='question_scope_open')
-    wrong_scope = models.ForeignKey(OpenEndedWrongScope, on_delete=models.CASCADE, related_name='question_wrong_scope_open')   
+    wrong_scope = models.ForeignKey(OpenEndedWrongScope, on_delete=models.CASCADE, related_name='question_wrong_scope_open')
+
+# flashcard questions models
+class FlashcardCategory(models.Model):
+    question_category = models.CharField(max_length=30)
+    
+    def __str__(self):
+        return self.question_category
+    
+class FlashcardScope(models.Model):
+    question_scope = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.question_scope
+    
+class FlashcardTarget(models.Model):
+    question_target = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.question_target
+
+class FlashcardWrongTarget(models.Model):
+    question_wrong_scope = models.CharField(max_length=350, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.question_wrong_scope
+    
+class FlashcardQuestion(models.Model):
+    category = models.ForeignKey()
+    scope = models.ForeignKey()
+    target_correct = models.ForeignKey()
+    target_wrong = models.ForeignKey()
+
+
+
