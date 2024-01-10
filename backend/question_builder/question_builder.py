@@ -133,6 +133,48 @@ class QuestionBuilder:
         })
 
         return df_out
+    
+    def prepare_flashcards(self, dataSource:str, targetName:str, targetCol:str, 
+                           scopeName:str, scopeCol:str, is_hard:bool):
+        
+        data = self.inputDataPrecambrian if dataSource=='precambrian' else self.inputDataNonPrecambrian
+        scopes = data[data[scopeCol]!='brak'][scopeCol].unique()
+
+        targets_corr = []
+        targets_wrong = []
+        scopes_out = []
+        category = []
+
+        for scope in scopes:
+            temp_corr_target = data[data[scopeCol]==scope][targetCol].unique()[0]
+            temp_wrong_target = np.nan
+
+            if is_hard:
+                temp_wrong_target = data[data[scopeCol]!=scope][targetCol].unique()
+                temp_wrong_target = np.random.choice(temp_wrong_target, 5, replace=False)
+                temp_wrong_target = ','.join(temp_wrong_target)
+
+            targets_corr.append(temp_corr_target)
+            targets_wrong.append(temp_wrong_target)
+            scopes_out.append(scope)
+            category.append(f'{targetName} {scopeName}')
+
+        df_out = pd.DataFrame({
+            'category': category,
+            'scope': scopes_out,
+            'target_correct': targets_corr,
+            'target_wrong': targets_wrong
+        })
+
+        return df_out
+
+
+            
+
+
+
+
+        
         
 
 
