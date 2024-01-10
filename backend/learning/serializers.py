@@ -23,10 +23,10 @@ class ClosedEndedPossibleAnswersSerializer(serializers.ModelSerializer):
 
 class ClosedEndedQuestionSerializer(serializers.ModelSerializer):
     category = serializers.StringRelatedField()
-    target = serializers.StringRelatedField()
-    possible_answers = ClosedEndedPossibleAnswersSerializer()
     correct_answer = ClosedEndedCorrectAnswerSerializer()
     is_multi = serializers.StringRelatedField()
+    possible_answers = ClosedEndedPossibleAnswersSerializer()
+    target = serializers.StringRelatedField()
 
     class Meta:
         model = ClosedEndedQuestion

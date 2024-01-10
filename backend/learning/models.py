@@ -17,7 +17,7 @@ class ClosedEndedIsMulti(models.Model):
 
     def __str__(self) -> str:
         return 'single' if self.question_is_multi==0 else 'multi'
-    
+
 class ClosedEndedPossibleAnswers(models.Model):
     question_possible_answers = models.CharField(max_length=300)
 
@@ -32,10 +32,10 @@ class ClosedEndedTarget(models.Model):
 
 class ClosedEndedQuestion(models.Model):
     category = models.ForeignKey(ClosedEndedCategory, on_delete=models.CASCADE, related_name="question_cat")
-    target = models.ForeignKey(ClosedEndedTarget, on_delete=models.CASCADE, related_name="question_txt")
-    possible_answers = models.ForeignKey(ClosedEndedPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
     correct_answer = models.ForeignKey(ClosedEndedCorrectAnswer, on_delete=models.CASCADE, related_name="correct_ans")
     is_multi = models.ForeignKey(ClosedEndedIsMulti, on_delete=models.CASCADE, related_name="is_multi_quest")
+    possible_answers = models.ForeignKey(ClosedEndedPossibleAnswers, on_delete=models.CASCADE, related_name="possible_ans")
+    target = models.ForeignKey(ClosedEndedTarget, on_delete=models.CASCADE, related_name="question_txt")
 
 # open ended question models ----------------------
 
